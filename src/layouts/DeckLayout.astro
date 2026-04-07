@@ -15,7 +15,20 @@
  *   - Render the slide counter overlay
  */
 
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
+
+// Preload the Latin-subset woff2 files we actually use, so the browser
+// has them in cache by the time CSS applies and GSAP starts animating.
+// Without this, fallback fonts paint first and swap mid-animation,
+// causing a visible layout shift (FOUT).
+import instrumentSerifItalic from '@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2?url';
+import inter400 from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
+import inter500 from '@fontsource/inter/files/inter-latin-500-normal.woff2?url';
+import inter600 from '@fontsource/inter/files/inter-latin-600-normal.woff2?url';
+import inter700 from '@fontsource/inter/files/inter-latin-700-normal.woff2?url';
+import geistMono600 from '@fontsource/geist-mono/files/geist-mono-latin-600-normal.woff2?url';
+import geistMono700 from '@fontsource/geist-mono/files/geist-mono-latin-700-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -26,6 +39,62 @@ const { title } = Astro.props;
 // Used to prefix every absolute asset path so the deck works under
 // /padelguest-pitch/ on GitHub Pages.
 const BASE = import.meta.env.BASE_URL;
+
+// Custom @font-face declarations with `font-display: block`. The browser
+// will WAIT for the font to load instead of swapping mid-render. Combined
+// with the preload links below, the wait is invisibly short because the
+// woff2 is already in cache by the time CSS evaluates.
+const fontFaceCss = `
+  @font-face {
+    font-family: 'Instrument Serif';
+    font-style: italic;
+    font-weight: 400;
+    font-display: block;
+    src: url('${instrumentSerifItalic}') format('woff2');
+  }
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url('${inter400}') format('woff2');
+  }
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-display: block;
+    src: url('${inter500}') format('woff2');
+  }
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-display: block;
+    src: url('${inter600}') format('woff2');
+  }
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: block;
+    src: url('${inter700}') format('woff2');
+  }
+  @font-face {
+    font-family: 'Geist Mono';
+    font-style: normal;
+    font-weight: 600;
+    font-display: block;
+    src: url('${geistMono600}') format('woff2');
+  }
+  @font-face {
+    font-family: 'Geist Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-display: block;
+    src: url('${geistMono700}') format('woff2');
+  }
+`;
 ---
 
 <!doctype html>
@@ -65,6 +134,22 @@ const BASE = import.meta.env.BASE_URL;
 
     <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
 
+    <!-- Font preloads: kick off the woff2 fetches in parallel with HTML
+         parse so the FontFace cache is warm before first paint. crossorigin
+         is required for the preload to dedupe with the @font-face fetch. -->
+    <link rel="preload" as="font" type="font/woff2" href={instrumentSerifItalic} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={inter400} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={inter500} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={inter600} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={inter700} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={geistMono600} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={geistMono700} crossorigin />
+
+    <!-- Custom @font-face with `font-display: block` — browser waits for the
+         font instead of swapping. Paired with the preloads above, the wait
+         is imperceptible. -->
+    <style is:global set:html={fontFaceCss}></style>
+
     <!-- Image preloading: warm up all slide assets on first page visit so subsequent
          navigation between slides is instant. Total ~1.2MB, fetched in parallel.
          After the first page, the browser cache makes every other slide free. -->
@@ -75,6 +160,10 @@ const BASE = import.meta.env.BASE_URL;
     <link rel="preload" as="image" href={`${BASE}slide-assets/match-confirmed.png`} />
     <link rel="preload" as="image" href={`${BASE}slide-assets/dashboard.png`} />
 
+    <!-- Astro view transitions: SPA-style swap with preserved <html>.
+         The keyframe animation is killed in global.css; we keep ClientRouter
+         only for prefetching and persistent script context. -->
+    <ClientRouter />
   </head>
 
   <body>

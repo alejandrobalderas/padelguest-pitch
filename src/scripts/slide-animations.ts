@@ -433,3 +433,8 @@ function runAnimation(): void {
 }
 
 runAnimation();
+
+// Re-trigger after every Astro view transition. With ClientRouter, the script
+// itself is not re-loaded — only the body is swapped — so we hook the
+// page-load event to dispatch the new slide's animation.
+document.addEventListener('astro:page-load', runAnimation);
