@@ -1,0 +1,64 @@
+/*
+ * PadelGuest Pitch Deck — Design Tokens
+ *
+ * Lifted from /PadelGuest/specs/knowledge/design-system.md
+ * and the variables defined in padel-guest.pen.
+ *
+ * All slides reference these CSS variables. Tailwind theme is configured
+ * in global.css to expose them as utility classes.
+ */
+
+:root {
+  /* Surface colors */
+  --surface-primary: #F5F3EE;       /* Cream — main deck background for content slides */
+  --surface-secondary: #C8DBBC;     /* Sage — light accents */
+  --surface-card: #FFFFFF;          /* White — card backgrounds */
+  --surface-inverse: #1B3A28;       /* Forest green — cover, operating layer, team, vision close */
+  --surface-dark-card: #2A4D35;     /* Slightly lighter forest — cards on dark slides */
+  --surface-input: #F8F7F4;         /* Form inputs */
+
+  /* Foreground colors */
+  --foreground-primary: #1B3A28;    /* Primary text on light backgrounds */
+  --foreground-secondary: #4A6B52;  /* Secondary text */
+  --foreground-muted: #7A9A80;      /* Captions, hint text */
+  --foreground-inverse: #FFFFFF;    /* Text on dark backgrounds */
+
+  /* Accent colors */
+  --accent-gold: #C9A84C;           /* Primary accent — labels, numbers, highlights */
+  --accent-gold-light: #F5EDD4;     /* Soft gold — selected states */
+  --accent-green: #2D5E3A;          /* Secondary accent */
+  --accent-success: #34A853;
+  --accent-error: #D94F3D;
+
+  /* Borders */
+  --border-light: #E5E2DB;
+  --border-green: #3D5A3E;
+
+  /* Typography families */
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'SF Mono', monospace;
+  --font-sans: 'Geist Sans', 'Inter', system-ui, sans-serif;
+
+  /* Spacing scale (matches PadelGuest design system) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Slide canvas dimensions (fixed) */
+  --slide-width: 1920px;
+  --slide-height: 1080px;
+
+  /* Set by slide-fitter.ts at runtime */
+  --slide-scale: 1;
+  --slide-x: 0px;
+  --slide-y: 0px;
+}

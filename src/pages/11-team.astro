@@ -1,0 +1,181 @@
+---
+import DeckLayout from '../layouts/DeckLayout.astro';
+import Slide from '../components/Slide.astro';
+import SlideHeader from '../components/SlideHeader.astro';
+---
+
+<DeckLayout title="Team">
+  <Slide bg="forest" index={11}>
+    <SlideHeader
+      label="11  ·  TEAM"
+      title="Built by operators on the ground in Riviera Maya."
+      tone="light"
+    />
+
+    <div class="slide-body" data-slide-anim="team">
+      <div class="row">
+        <div class="card" data-anim="card">
+          <div class="avatar">
+            <span>CF</span>
+          </div>
+          <p class="name">César Fernandez del Campo</p>
+          <p class="role">FOUNDER &amp; CEO</p>
+          <p class="bio">
+            Real estate developer · Owner, México Waves (Pro Padel League) ·
+            Deep network across Riviera Maya hotel market.
+          </p>
+        </div>
+
+        <div class="card" data-anim="card">
+          <div class="avatar">
+            <span>AB</span>
+          </div>
+          <p class="name">Alejandro Balderas</p>
+          <p class="role">CO-FOUNDER &amp; CTO</p>
+          <p class="bio">
+            Full-stack product · Web app · WhatsApp automation ·
+            Branded video pipeline.
+          </p>
+        </div>
+
+        <div class="card placeholder" data-anim="card">
+          <div class="avatar placeholder-avatar">
+            <span>+</span>
+          </div>
+          <p class="name">COO</p>
+          <p class="role">TO BE HIRED</p>
+          <p class="bio">
+            Hospitality ops background · Hotel sales · Onboarding ·
+            Day-to-day operations.
+          </p>
+        </div>
+      </div>
+
+      <div class="advantage" data-anim="advantage">
+        <p class="advantage-label">UNFAIR ADVANTAGE</p>
+        <p class="advantage-quote">
+          We own a Pro Padel League team — the only operator in hospitality
+          with a professional padel credential that opens doors no competitor
+          can knock on.
+        </p>
+      </div>
+    </div>
+  </Slide>
+</DeckLayout>
+
+<style>
+  .slide-body {
+    justify-content: space-between;
+    gap: 48px;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    gap: 36px;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .card {
+    flex: 1;
+    background: var(--surface-dark-card);
+    border-radius: 24px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    align-items: flex-start;
+  }
+
+  .card.placeholder {
+    background: transparent;
+    border: 1px dashed var(--border-green);
+  }
+
+  .avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 9999px;
+    background: var(--accent-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avatar.placeholder-avatar {
+    background: transparent;
+    border: 1.5px dashed var(--accent-gold);
+  }
+
+  .avatar span {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--surface-inverse);
+  }
+
+  .placeholder-avatar span {
+    color: var(--accent-gold);
+    font-weight: 400;
+    font-size: 52px;
+  }
+
+  .name {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--foreground-inverse);
+  }
+
+  .role {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--accent-gold);
+  }
+
+  .bio {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--foreground-inverse);
+    opacity: 0.7;
+  }
+
+  /* The Unfair Advantage callout banner — full-width gold-bordered card
+     anchored to the bottom of the slide body. */
+  .advantage {
+    width: 100%;
+    border-left: 3px solid var(--accent-gold);
+    padding: 18px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .advantage-label {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: var(--accent-gold);
+  }
+
+  .advantage-quote {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--foreground-inverse);
+    max-width: 1500px;
+  }
+</style>
+
+<!-- Animation handled by global slide-animations.ts (dispatched via data-slide-anim="team") -->

@@ -1,0 +1,73 @@
+---
+import DeckLayout from '../layouts/DeckLayout.astro';
+import Slide from '../components/Slide.astro';
+import SlideHeader from '../components/SlideHeader.astro';
+---
+
+<DeckLayout title="The Opportunity">
+  <Slide bg="cream" index={2}>
+    <SlideHeader
+      label="02  ·  THE OPPORTUNITY"
+      title="The biggest sport with the smallest hotel footprint."
+    />
+
+    <div class="slide-body" data-slide-anim="hook">
+      <div class="stats">
+        <div class="stat" data-anim="stat">
+          <p class="num">30M+</p>
+          <p class="cap">Padel players worldwide</p>
+        </div>
+        <div class="stat" data-anim="stat">
+          <p class="num gold">+25%</p>
+          <p class="cap">Year over year. Every year.</p>
+        </div>
+        <div class="stat" data-anim="stat">
+          <p class="num">&lt;1%</p>
+          <p class="cap">Of hotels worldwide have a court</p>
+        </div>
+      </div>
+    </div>
+  </Slide>
+</DeckLayout>
+
+<style>
+  .slide-body {
+    justify-content: flex-end;
+  }
+
+  .stats {
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-size: 160px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--foreground-primary);
+    margin: 0;
+  }
+  .num.gold { color: var(--accent-gold); }
+
+  .cap {
+    font-family: var(--font-body);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--foreground-secondary);
+    max-width: 380px;
+    line-height: 1.4;
+  }
+</style>
+
+<!-- Animation handled by global slide-animations.ts (dispatched via data-slide-anim="hook") -->

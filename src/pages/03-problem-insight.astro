@@ -1,0 +1,171 @@
+---
+import DeckLayout from '../layouts/DeckLayout.astro';
+import Slide from '../components/Slide.astro';
+import SlideHeader from '../components/SlideHeader.astro';
+---
+
+<DeckLayout title="Problem & Insight">
+  <Slide bg="cream" index={3}>
+    <SlideHeader
+      label="03  ·  THE PROBLEM"
+      title="A hotel installs a padel court.<br />Then what?"
+    />
+
+    <div class="slide-body" data-slide-anim="problem">
+      <div class="split">
+        <div class="left" data-anim="left">
+          <p class="lead">Demand isn't the problem. Activation is.</p>
+          <p class="body">
+            Hotels invested millions in padel courts running at
+            <span class="hl">15–25% occupancy</span>. Guests don't know who to play
+            with. There's no app, no concierge for it, no chat group.
+          </p>
+          <p class="body">
+            Playtomic connects players across a city.
+            <strong>No one connects guests in the same hotel at 5pm.</strong>
+          </p>
+        </div>
+
+        <div class="right" data-anim="right">
+          <p class="card-label">THE INSIGHT</p>
+          <p class="quote">
+            Hotel guests are captive, high-intent, and completely invisible to each other.
+            Nobody has built a matchmaking layer for a captive population.
+          </p>
+          <p class="punch">That's the entire opportunity.</p>
+        </div>
+      </div>
+
+      <div class="pilot" data-anim="pilot">
+        <p class="pilot-label">FROM OUR PILOT</p>
+        <p class="pilot-quote">
+          <span class="pct">41%</span> of players had never held a racket. They came on
+          vacation. We gave them something more valuable: a friend they didn't expect.
+        </p>
+      </div>
+    </div>
+  </Slide>
+</DeckLayout>
+
+<style>
+  .slide-body {
+    justify-content: space-between;
+    gap: 36px;
+  }
+
+  .split {
+    display: flex;
+    flex-direction: row;
+    gap: 72px;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .lead {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--foreground-primary);
+    line-height: 1.2;
+  }
+
+  .body {
+    font-family: var(--font-body);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--foreground-secondary);
+    line-height: 1.5;
+  }
+
+  .body strong {
+    color: var(--foreground-primary);
+    font-weight: 600;
+  }
+
+  .body .hl {
+    color: var(--foreground-primary);
+    font-weight: 600;
+  }
+
+  .right {
+    flex: 1;
+    background: var(--surface-inverse);
+    border-radius: 24px;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .card-label {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--accent-gold);
+  }
+
+  .quote {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--foreground-inverse);
+  }
+
+  .punch {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--accent-gold);
+  }
+
+  /* Pilot data callout — small banner anchored at bottom */
+  .pilot {
+    width: 100%;
+    border-left: 3px solid var(--accent-gold);
+    padding: 14px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pilot-label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: var(--accent-gold);
+  }
+
+  .pilot-quote {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--foreground-secondary);
+    max-width: 1500px;
+  }
+
+  .pilot-quote .pct {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-weight: 700;
+    color: var(--accent-gold);
+    font-size: 26px;
+  }
+</style>
+
+<!-- Animation handled by global slide-animations.ts (dispatched via data-slide-anim="problem") -->

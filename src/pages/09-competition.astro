@@ -1,0 +1,184 @@
+---
+import DeckLayout from '../layouts/DeckLayout.astro';
+import Slide from '../components/Slide.astro';
+import SlideHeader from '../components/SlideHeader.astro';
+
+interface Dot {
+  id: string;
+  label: string;
+  x: number; // 0-100, % from left
+  y: number; // 0-100, % from top
+  highlight?: boolean;
+}
+
+const dots: Dot[] = [
+  { id: 'pg', label: 'Padel Guest', x: 82, y: 18, highlight: true },
+  { id: 'clubmed', label: 'Club Med', x: 60, y: 32 },
+  { id: 'lux', label: 'LUX Tennis', x: 30, y: 48 },
+  { id: 'playtomic', label: 'Playtomic', x: 50, y: 75 },
+];
+---
+
+<DeckLayout title="Competition">
+  <Slide bg="cream" index={9}>
+    <SlideHeader
+      label="09  ·  COMPETITION"
+      title="Nobody operates this model."
+    />
+
+    <div class="slide-body" data-slide-anim="competition">
+      <div class="matrix-wrap">
+        <div class="matrix" data-anim="matrix">
+          <!-- Y axis labels -->
+          <span class="axis-label y-top">HOTEL-SPECIFIC</span>
+          <span class="axis-label y-bottom">GENERIC</span>
+
+          <!-- X axis labels -->
+          <span class="axis-label x-left">LOW TECH</span>
+          <span class="axis-label x-right">HIGH TECH</span>
+
+          <!-- Cross lines -->
+          <div class="cross h-line"></div>
+          <div class="cross v-line"></div>
+
+          <!-- Dots -->
+          {dots.map(dot => (
+            <div
+              class={`dot ${dot.highlight ? 'highlight' : ''}`}
+              style={`left: ${dot.x}%; top: ${dot.y}%;`}
+              data-anim="dot"
+            >
+              <span class="dot-circle"></span>
+              <span class="dot-label">{dot.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p class="pull" data-anim="pull">The category is empty.</p>
+    </div>
+  </Slide>
+</DeckLayout>
+
+<style>
+  .slide-body {
+    align-items: center;
+    gap: 32px;
+  }
+
+  .matrix-wrap {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .matrix {
+    position: relative;
+    width: 900px;
+    height: 500px;
+  }
+
+  /* Axis labels */
+  .axis-label {
+    position: absolute;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--foreground-secondary);
+  }
+  .y-top {
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .y-bottom {
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .x-left {
+    left: -90px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .x-right {
+    right: -90px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Cross lines */
+  .cross {
+    position: absolute;
+    background: var(--border-light);
+  }
+  .h-line {
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+  }
+  .v-line {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+  }
+
+  /* Dots */
+  .dot {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .dot-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 9999px;
+    background: var(--foreground-secondary);
+    border: 3px solid var(--surface-primary);
+    box-shadow: 0 0 0 1px var(--foreground-secondary);
+  }
+
+  .dot.highlight .dot-circle {
+    background: var(--accent-gold);
+    box-shadow: 0 0 0 1px var(--accent-gold), 0 0 0 8px rgba(201, 168, 76, 0.18);
+    width: 26px;
+    height: 26px;
+  }
+
+  .dot-label {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--foreground-secondary);
+    white-space: nowrap;
+  }
+
+  .dot.highlight .dot-label {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--foreground-primary);
+  }
+
+  .pull {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent-green);
+    text-align: center;
+    width: 100%;
+  }
+</style>
+
+<!-- Animation handled by global slide-animations.ts (dispatched via data-slide-anim="competition") -->

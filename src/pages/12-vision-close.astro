@@ -1,0 +1,237 @@
+---
+import DeckLayout from '../layouts/DeckLayout.astro';
+import Slide from '../components/Slide.astro';
+import SlideHeader from '../components/SlideHeader.astro';
+
+interface GTMStep {
+  num: string;
+  title: string;
+  body: string;
+}
+
+const gtm: GTMStep[] = [
+  {
+    num: '01',
+    title: 'Asset investor model',
+    body: 'Investor buys courts. PG operates under fixed lease.',
+  },
+  {
+    num: '02',
+    title: '20 hotels in QR',
+    body: 'Close 20 properties in Quintana Roo. Month 1–6.',
+  },
+  {
+    num: '03',
+    title: 'Cash flow positive',
+    body: 'Profitable from month 1. Reinvest 65% into owned courts.',
+  },
+  {
+    num: '04',
+    title: 'Seed at $14.9M pre',
+    body: 'Raise at month 6–9 with $1.2M ARR.',
+  },
+  {
+    num: '05',
+    title: 'Series A at $56M pre',
+    body: 'Month 18 · $3.76M ARR.',
+  },
+];
+---
+
+<DeckLayout title="Now Is The Time">
+  <Slide bg="forest" index={12}>
+    <SlideHeader label="12  ·  NOW IS THE TIME" tone="light" />
+
+    <div class="vision-body" data-slide-anim="vision">
+      <div class="top" data-anim="left">
+        <h1 class="quote">The first-mover window is real — and it's closing.</h1>
+        <div class="rule"></div>
+      </div>
+
+      <div class="gtm" data-anim="right">
+        <p class="gtm-label">GO TO MARKET</p>
+        <div class="gtm-row">
+          {gtm.map(step => (
+            <div class="step">
+              <p class="step-num">{step.num}</p>
+              <p class="step-title">{step.title}</p>
+              <p class="step-body">{step.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p class="vision-line">
+        <span class="big">$110B</span> luxury hotel market · padel penetration still
+        <span class="big">&lt;1%</span>. We are building the infrastructure layer
+        that connects guests through sport at scale.
+      </p>
+    </div>
+
+    <div class="vision-footer" data-anim="footer">
+      <div class="footer-left">
+        <p class="footer-label">PADELGUEST</p>
+        <p class="footer-names">César Fernandez del Campo  ·  Alejandro Balderas</p>
+      </div>
+      <p class="footer-url">padelguest.com</p>
+    </div>
+  </Slide>
+</DeckLayout>
+
+<style>
+  /* Custom positioning for vision close — header at top: 80px (via SlideHeader),
+     middle content fills the slide body, footer at bottom: 80px */
+  .vision-body {
+    position: absolute;
+    top: 320px;
+    left: 140px;
+    right: 140px;
+    bottom: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    color: var(--foreground-inverse);
+  }
+
+  .top {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .quote {
+    font-family: var(--font-display);
+    font-size: 56px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--foreground-inverse);
+    margin: 0;
+    max-width: 1640px;
+  }
+
+  .rule {
+    width: 160px;
+    height: 6px;
+    background: var(--accent-gold);
+    border-radius: 9999px;
+  }
+
+  .gtm {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .gtm-label {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: var(--accent-gold);
+  }
+
+  .gtm-row {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    width: 100%;
+  }
+
+  .step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 16px;
+    border-left: 2px solid var(--accent-gold);
+  }
+
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--accent-gold);
+  }
+
+  .step-title {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--foreground-inverse);
+    line-height: 1.3;
+  }
+
+  .step-body {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--foreground-inverse);
+    opacity: 0.7;
+    line-height: 1.45;
+  }
+
+  .vision-line {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--foreground-inverse);
+    opacity: 0.85;
+    max-width: 1500px;
+    margin-top: auto;
+  }
+
+  .vision-line .big {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-weight: 700;
+    color: var(--accent-gold);
+  }
+
+  .vision-footer {
+    position: absolute;
+    bottom: 80px;
+    left: 140px;
+    right: 140px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    color: var(--foreground-inverse);
+  }
+
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .footer-label {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--accent-gold);
+  }
+
+  .footer-names {
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--foreground-inverse);
+  }
+
+  .footer-url {
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--accent-gold);
+  }
+</style>
+
+<!-- Animation handled by global slide-animations.ts (dispatched via data-slide-anim="vision") -->

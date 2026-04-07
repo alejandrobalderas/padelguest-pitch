@@ -1,0 +1,76 @@
+---
+import DeckLayout from '../layouts/DeckLayout.astro';
+import Slide from '../components/Slide.astro';
+import SlideHeader from '../components/SlideHeader.astro';
+
+const BASE = import.meta.env.BASE_URL;
+---
+
+<DeckLayout title="The Operating Layer">
+  <Slide bg="forest" index={5}>
+    <SlideHeader
+      label="05  ·  THE OPERATING LAYER"
+      title="Full court transparency.<br />From one dashboard."
+      tone="light"
+    />
+
+    <div class="slide-body" data-slide-anim="operating">
+      <p class="sub" data-anim="sub">
+        Live occupancy, revenue, payments, and P&amp;L — for every property we run,
+        in a single screen. The hotel gets paid. PadelGuest gets the leverage.
+      </p>
+
+      <div class="hero-wrap">
+        <div class="hero" data-anim="hero">
+          <img src={`${BASE}slide-assets/dashboard.png`} alt="PadelGuest operating dashboard" />
+        </div>
+      </div>
+    </div>
+  </Slide>
+</DeckLayout>
+
+<style>
+  .slide-body {
+    gap: 32px;
+  }
+
+  .sub {
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--foreground-inverse);
+    opacity: 0.7;
+    max-width: 1300px;
+  }
+
+  .hero-wrap {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  /*
+   * Container matches the source image's 16:10 aspect ratio (2880×1800)
+   * so the dashboard renders with no cropping. Width derives from height.
+   */
+  .hero {
+    height: 605px;
+    aspect-ratio: 16 / 10;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--border-green);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  }
+
+  .hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+</style>
+
+<!-- Animation handled by global slide-animations.ts (dispatched via data-slide-anim="operating") -->

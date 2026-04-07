@@ -1,0 +1,30 @@
+---
+/**
+ * Slide.astro — The base 1920×1080 fixed-canvas wrapper.
+ *
+ * Every slide page wraps its content in this component. The CSS classes
+ * (.deck-page + .slide-frame) are styled in global.css and scaled at runtime
+ * by slide-fitter.ts via CSS variables.
+ *
+ * Usage:
+ *   ---
+ *   import Slide from '../components/Slide.astro';
+ *   ---
+ *   <Slide bg="cream" index={1}>
+ *     <!-- 1920×1080 content here -->
+ *   </Slide>
+ */
+
+interface Props {
+  bg: 'cream' | 'forest';
+  index: number;
+}
+
+const { bg, index } = Astro.props;
+---
+
+<main class:list={['deck-page', `bg-${bg}`]}>
+  <div class="slide-frame" data-slide-index={index}>
+    <slot />
+  </div>
+</main>

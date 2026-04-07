@@ -1,0 +1,126 @@
+---
+import DeckLayout from '../layouts/DeckLayout.astro';
+import Slide from '../components/Slide.astro';
+import SlideHeader from '../components/SlideHeader.astro';
+
+const leftHotels = [
+  { name: 'Grand Palladium Costa Mujeres', rooms: '494+ rooms', strong: true },
+  { name: 'Paradisus Cancún · Meliá', rooms: '677 rooms' },
+  { name: 'Club Med Cancún', rooms: '~400 rooms' },
+  { name: 'Sandos Playacar', rooms: '819 rooms' },
+  { name: 'Sandos Caracol Eco Resort', rooms: '800+ rooms' },
+];
+
+const rightHotels = [
+  { name: 'Platinum Yucatan Princess', rooms: '~444 rooms' },
+  { name: 'Barceló Maya Grand Resort', rooms: '3,578 rooms', strong: true },
+  { name: 'Fairmont Mayakoba', rooms: '401 rooms' },
+  { name: 'Grand Palladium Colonial / Kantenah', rooms: '835+ rooms' },
+  { name: 'Occidental at Xcaret', rooms: '765 rooms' },
+];
+---
+
+<DeckLayout title="The Beachhead">
+  <Slide bg="cream" index={10}>
+    <SlideHeader
+      label="10  ·  THE BEACHHEAD"
+      title="10 hotels in Caribe Mexicano that already have courts."
+    />
+
+    <div class="slide-body" data-slide-anim="beachhead">
+      <p class="sub" data-anim="sub">
+        Properties matching our software-pilot criteria today — existing courts,
+        200+ rooms, chain-affiliated. Zero capex, zero install risk.
+      </p>
+
+      <div class="grid">
+        <div class="col">
+          {leftHotels.map(h => (
+            <div class="hotel" data-anim="hotel">
+              <span class={`name ${h.strong ? 'strong' : ''}`}>{h.name}</span>
+              <span class="rooms">{h.rooms}</span>
+            </div>
+          ))}
+        </div>
+        <div class="col">
+          {rightHotels.map(h => (
+            <div class="hotel" data-anim="hotel">
+              <span class={`name ${h.strong ? 'strong' : ''}`}>{h.name}</span>
+              <span class="rooms">{h.rooms}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p class="caption" data-anim="caption">
+        Converting one mega-chain pilot (Meliá, Barceló, Palladium) opens
+        a corporate conversation that unlocks 10+ properties per chain.
+      </p>
+    </div>
+  </Slide>
+</DeckLayout>
+
+<style>
+  .slide-body {
+    gap: 36px;
+  }
+
+  .sub {
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--foreground-secondary);
+    line-height: 1.5;
+    max-width: 1500px;
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    width: 100%;
+    align-items: flex-start;
+    flex: 1;
+  }
+
+  .col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hotel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .hotel:last-child { border-bottom: none; }
+
+  .name {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--foreground-primary);
+  }
+  .name.strong { font-weight: 600; }
+
+  .rooms {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent-gold);
+  }
+
+  .caption {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--foreground-secondary);
+  }
+</style>
+
+<!-- Animation handled by global slide-animations.ts (dispatched via data-slide-anim="beachhead") -->

@@ -1,0 +1,111 @@
+---
+/**
+ * DeckLayout.astro — The global shell for every slide page.
+ *
+ * Each slide is a separate Astro page rendered with hard navigation. This
+ * gives us atomic single-paint commits per slide (no half-rendered state).
+ *
+ * Responsibilities:
+ *   - Set HTML lang, viewport, document title
+ *   - Load global stylesheet (fonts + tokens + reset + slide-frame styles)
+ *   - Inline-script: tag <html> as JS-enabled and compute slide-fitter values
+ *     before first paint (eliminates the FOUC and the title "jump")
+ *   - Preload slide image assets so cross-slide nav is instant
+ *   - Mount slide-fitter (resize handler), deck-controller (nav), animations
+ *   - Render the slide counter overlay
+ */
+
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+// BASE_URL is the configured `base` from astro.config.mjs (with trailing slash).
+// Used to prefix every absolute asset path so the deck works under
+// /padelguest-pitch/ on GitHub Pages.
+const BASE = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#1B3A28" />
+    <meta name="description" content="PadelGuest — The missing layer between hotels and their padel courts." />
+
+    <!-- FOUC prevention: tag the html element as JS-enabled BEFORE first paint.
+         The CSS rule `html.js [data-anim] { opacity: 0 }` then hides animated
+         elements from the very first frame, eliminating the "flash to final state"
+         that happens when JS runs after the initial paint.
+         No-JS users (no .js class) still see all content normally. -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+
+      // Inline slide-fitter: compute scale + offsets BEFORE first paint so the
+      // slide-frame is sized correctly on the very first frame of every page
+      // load. Without this, the new document briefly paints with the default
+      // `--slide-scale: 1` from tokens.css (unscaled 1920x1080), then the
+      // deferred module script snaps it down — visible as a title "jump".
+      (function () {
+        var W = 1920, H = 1080;
+        var s = Math.min(window.innerWidth / W, window.innerHeight / H);
+        var x = (window.innerWidth  - W * s) / 2;
+        var y = (window.innerHeight - H * s) / 2;
+        var r = document.documentElement.style;
+        r.setProperty('--slide-scale', String(s));
+        r.setProperty('--slide-x', x + 'px');
+        r.setProperty('--slide-y', y + 'px');
+      })();
+    </script>
+
+    <title>{title} · PadelGuest</title>
+
+    <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
+
+    <!-- Image preloading: warm up all slide assets on first page visit so subsequent
+         navigation between slides is instant. Total ~1.2MB, fetched in parallel.
+         After the first page, the browser cache makes every other slide free. -->
+    <link rel="preload" as="image" href={`${BASE}slide-assets/registration.png`} />
+    <link rel="preload" as="image" href={`${BASE}slide-assets/available-matches.png`} />
+    <link rel="preload" as="image" href={`${BASE}slide-assets/whatsapp-flow.png`} />
+    <link rel="preload" as="image" href={`${BASE}slide-assets/stripe-checkout.png`} />
+    <link rel="preload" as="image" href={`${BASE}slide-assets/match-confirmed.png`} />
+    <link rel="preload" as="image" href={`${BASE}slide-assets/dashboard.png`} />
+
+  </head>
+
+  <body>
+    <slot />
+
+    <!-- Slide counter overlay (fixed bottom-right) -->
+    <div id="slide-counter" class="slide-counter" aria-hidden="true"></div>
+
+    <!-- Scripts: fitter (CSS scaling) + deck controller (keyboard / swipe / nav)
+         + slide animations (single global file, scoped per slide) -->
+    <script>
+      import '../scripts/slide-fitter';
+      import '../scripts/deck-controller';
+      import '../scripts/slide-animations';
+    </script>
+
+    <style>
+      .slide-counter {
+        position: fixed;
+        bottom: 20px;
+        right: 24px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        color: var(--accent-gold);
+        opacity: 0.6;
+        z-index: 100;
+        pointer-events: none;
+        user-select: none;
+      }
+    </style>
+  </body>
+</html>

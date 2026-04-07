@@ -1,0 +1,127 @@
+---
+import DeckLayout from '../layouts/DeckLayout.astro';
+import Slide from '../components/Slide.astro';
+import SlideHeader from '../components/SlideHeader.astro';
+---
+
+<DeckLayout title="The Market">
+  <Slide bg="cream" index={7}>
+    <SlideHeader
+      label="07  ·  THE MARKET"
+      title="Caribbean → Maldives → Centroamérica."
+    />
+
+    <div class="slide-body" data-slide-anim="market">
+      <p class="sub" data-anim="sub">
+        The Caribe Mexicano beachhead exists because the founding team is here —
+        not because the market is regional. The category is global.
+      </p>
+
+      <div class="table">
+        <div class="row header" data-anim="row">
+          <span class="cell">MARKET</span>
+          <span class="cell">CANDIDATE HOTELS</span>
+          <span class="cell">PAYBACK</span>
+          <span class="cell">ENTRY</span>
+        </div>
+
+        <div class="row highlight" data-anim="row">
+          <span class="cell name strong">Caribe Mexicano</span>
+          <span class="cell mono strong">575+</span>
+          <span class="cell mono strong">9–21 mo</span>
+          <span class="cell tag">Now · beachhead</span>
+        </div>
+
+        <div class="row" data-anim="row">
+          <span class="cell name">Punta Cana / Caribbean</span>
+          <span class="cell mono">100–130</span>
+          <span class="cell mono">11–17 mo</span>
+          <span class="cell muted">2027</span>
+        </div>
+
+        <div class="row" data-anim="row">
+          <span class="cell name">Maldives</span>
+          <span class="cell mono">140+</span>
+          <span class="cell mono gold-strong">5–9 mo</span>
+          <span class="cell muted">2026–27</span>
+        </div>
+
+        <div class="row" data-anim="row">
+          <span class="cell name">Centroamérica</span>
+          <span class="cell mono">40–50</span>
+          <span class="cell mono">12–18 mo</span>
+          <span class="cell muted">2028+</span>
+        </div>
+      </div>
+    </div>
+  </Slide>
+</DeckLayout>
+
+<style>
+  .slide-body {
+    gap: 36px;
+  }
+
+  .sub {
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--foreground-secondary);
+    line-height: 1.5;
+    max-width: 1500px;
+  }
+
+  .table {
+    width: 100%;
+    background: var(--surface-card);
+    border-radius: 16px;
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    padding: 22px 32px;
+    border-top: 1px solid var(--border-light);
+  }
+  .row:first-child { border-top: none; }
+  .row.header {
+    background: var(--surface-input);
+    padding: 18px 32px;
+  }
+  .row.highlight { background: var(--accent-gold-light); }
+
+  .cell {
+    flex: 1;
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--foreground-primary);
+  }
+  .row.header .cell {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--foreground-secondary);
+  }
+  .cell.name { font-weight: 500; }
+  .cell.name.strong { font-weight: 600; }
+  .cell.mono {
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+  .cell.mono.strong { font-weight: 600; }
+  .cell.mono.gold-strong {
+    color: var(--accent-gold);
+    font-weight: 700;
+  }
+  .cell.tag {
+    color: var(--accent-green);
+    font-weight: 700;
+    font-style: italic;
+  }
+  .cell.muted { color: var(--foreground-secondary); }
+</style>
+
+<!-- Animation handled by global slide-animations.ts (dispatched via data-slide-anim="market") -->

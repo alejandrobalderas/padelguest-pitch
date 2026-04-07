@@ -1,0 +1,166 @@
+---
+import DeckLayout from '../layouts/DeckLayout.astro';
+import Slide from '../components/Slide.astro';
+import SlideHeader from '../components/SlideHeader.astro';
+
+interface Step {
+  num: string;
+  name: string;
+  desc: string;
+  type: 'qr' | 'image';
+  img?: string;
+  alt?: string;
+}
+
+// Image paths use the configured base so the deck works under /padelguest-pitch/.
+const BASE = import.meta.env.BASE_URL;
+const steps: Step[] = [
+  { num: '01', name: 'Scan',        desc: 'QR code in the hotel room', type: 'qr' },
+  { num: '02', name: 'Register',    desc: '20s. No account.',          type: 'image', img: `${BASE}slide-assets/registration.png`,     alt: 'Registration screen' },
+  { num: '03', name: 'Pick a time', desc: 'Choose your time',          type: 'image', img: `${BASE}slide-assets/available-matches.png`, alt: 'Available matches screen' },
+  { num: '04', name: 'Get matched', desc: 'WhatsApp pings you',        type: 'image', img: `${BASE}slide-assets/whatsapp-flow.png`,     alt: 'WhatsApp notification' },
+  { num: '05', name: 'Pay',         desc: 'Stripe link in chat',       type: 'image', img: `${BASE}slide-assets/stripe-checkout.png`,   alt: 'Stripe Checkout' },
+  { num: '06', name: 'Play',        desc: 'Court reserved',            type: 'image', img: `${BASE}slide-assets/match-confirmed.png`,   alt: 'Match confirmed' },
+];
+---
+
+<DeckLayout title="The Solution">
+  <Slide bg="cream" index={4}>
+    <SlideHeader
+      label="04  ·  THE SOLUTION"
+      title="QR code → match on the court.<br />Zero hotel staff."
+    />
+
+    <div class="slide-body" data-slide-anim="solution">
+      <div class="flow">
+        {steps.map(step => (
+          <div class="col">
+            <p class="num" data-anim="number">{step.num}</p>
+            <div class="rule" data-anim="rule"></div>
+            <p class="name" data-anim="name">{step.name}</p>
+            <p class="desc" data-anim="desc">{step.desc}</p>
+            {step.type === 'qr' ? (
+              <div class="phone qr" data-anim="phone">
+                <svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="5" height="5" x="3" y="3" rx="1"/>
+                  <rect width="5" height="5" x="16" y="3" rx="1"/>
+                  <rect width="5" height="5" x="3" y="16" rx="1"/>
+                  <path d="M21 16h-3a2 2 0 0 0-2 2v3"/>
+                  <path d="M21 21v.01"/>
+                  <path d="M12 7v3a2 2 0 0 1-2 2H7"/>
+                  <path d="M3 12h.01"/>
+                  <path d="M12 3h.01"/>
+                  <path d="M12 16v.01"/>
+                  <path d="M16 12h1"/>
+                  <path d="M21 12v.01"/>
+                  <path d="M12 21v-1"/>
+                </svg>
+              </div>
+            ) : (
+              <div class="phone" data-anim="phone">
+                <img src={step.img} alt={step.alt} />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <p class="footer-caption" data-anim="footer-caption">
+        Zero app downloads.   ·   Zero hotel staff intervention.   ·   Zero friction.
+      </p>
+    </div>
+  </Slide>
+</DeckLayout>
+
+<style>
+  .slide-body {
+    justify-content: space-between;
+  }
+
+  .flow {
+    display: flex;
+    flex-direction: row;
+    gap: 48px;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    max-width: 220px;
+  }
+
+  .num {
+    font-family: var(--font-display);
+    font-size: 96px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--accent-gold);
+    margin: 0;
+  }
+
+  .rule {
+    width: 48px;
+    height: 3px;
+    background: var(--accent-gold);
+    transform-origin: left;
+  }
+
+  .name {
+    font-family: var(--font-body);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--foreground-primary);
+  }
+
+  .desc {
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--foreground-secondary);
+    line-height: 1.4;
+    height: 52px;
+  }
+
+  .phone {
+    width: 170px;
+    height: 368px;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 6px 24px rgba(27, 58, 40, 0.12);
+    background: var(--surface-card);
+  }
+
+  .phone img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .phone.qr {
+    background: var(--surface-inverse);
+    border: 1px solid var(--border-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-gold);
+  }
+
+  .footer-caption {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--foreground-secondary);
+  }
+</style>
+
+<!-- Animation handled by global slide-animations.ts (dispatched via data-slide-anim="solution") -->

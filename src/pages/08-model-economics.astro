@@ -1,0 +1,233 @@
+---
+import DeckLayout from '../layouts/DeckLayout.astro';
+import Slide from '../components/Slide.astro';
+import SlideHeader from '../components/SlideHeader.astro';
+---
+
+<DeckLayout title="Operating Model">
+  <Slide bg="cream" index={8}>
+    <SlideHeader
+      label="08  ·  OPERATING MODEL"
+      title="Cash flow positive from month 1."
+    />
+
+    <div class="slide-body" data-slide-anim="economics">
+      <!-- Top zone: 3 flow cards with subtle gold connectors. Hardcoded
+           (no map+fragment) to keep the markup simple and predictable. -->
+      <div class="flow-row">
+        <div class="step" data-anim="trow">
+          <p class="step-num">01</p>
+          <div class="step-rule"></div>
+          <p class="step-title">Asset investor</p>
+          <p class="step-body">
+            Buys the courts. Owns the hardware. Earns a fixed lease.
+          </p>
+        </div>
+
+        <div class="connector" data-anim="trow">→</div>
+
+        <div class="step" data-anim="trow">
+          <p class="step-num">02</p>
+          <div class="step-rule"></div>
+          <p class="step-title">PadelGuest</p>
+          <p class="step-body">
+            Operates everything. Software, matchmaking, payments, BD.
+          </p>
+        </div>
+
+        <div class="connector" data-anim="trow">→</div>
+
+        <div class="step" data-anim="trow">
+          <p class="step-num">03</p>
+          <div class="step-rule"></div>
+          <p class="step-title">Hotel</p>
+          <p class="step-body">
+            Provides the land and the guests. Gets paid. Lifts no finger.
+          </p>
+        </div>
+      </div>
+
+      <!-- Bottom zone: dark forest green proof panel -->
+      <div class="proof" data-anim="card">
+        <div class="proof-hero">
+          <p class="proof-num">Month 1</p>
+          <p class="proof-label">Cash flow positive from day one</p>
+        </div>
+        <div class="proof-divider"></div>
+        <div class="proof-stats">
+          <div class="proof-stat">
+            <p class="proof-stat-num">65%</p>
+            <p class="proof-stat-label">Reinvested into PG-owned courts</p>
+          </div>
+          <div class="proof-stat">
+            <p class="proof-stat-num">$0</p>
+            <p class="proof-stat-label">Hotel capex required</p>
+          </div>
+          <div class="proof-stat">
+            <p class="proof-stat-num">5 yrs</p>
+            <p class="proof-stat-label">Lease lock-in per court</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Slide>
+</DeckLayout>
+
+<style>
+  .slide-body {
+    justify-content: space-between;
+    gap: 56px;
+  }
+
+  /* === TOP ZONE: 3 flow cards in a horizontal row === */
+  .flow-row {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .step {
+    flex: 1 1 0;
+    min-width: 0;
+    background: var(--surface-card);
+    border: 1px solid var(--border-light);
+    border-radius: 18px;
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--accent-gold);
+    margin: 0;
+  }
+
+  .step-rule {
+    width: 40px;
+    height: 3px;
+    background: var(--accent-gold);
+  }
+
+  .step-title {
+    font-family: var(--font-body);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--foreground-primary);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .step-body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--foreground-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Connector arrow between steps */
+  .connector {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 36px;
+    color: var(--accent-gold);
+    padding: 0 8px;
+  }
+
+  /* === BOTTOM ZONE: dark forest green proof panel === */
+  .proof {
+    width: 100%;
+    background: var(--surface-inverse);
+    border-radius: 18px;
+    padding: 48px 56px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 56px;
+    color: var(--foreground-inverse);
+  }
+
+  .proof-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .proof-num {
+    font-family: var(--font-mono);
+    font-size: 88px;
+    font-weight: 700;
+    line-height: 0.95;
+    color: var(--accent-gold);
+    margin: 0;
+  }
+
+  .proof-label {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--foreground-inverse);
+    opacity: 0.85;
+    margin: 0;
+    max-width: 380px;
+    line-height: 1.3;
+  }
+
+  .proof-divider {
+    width: 1px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+  }
+
+  .proof-stats {
+    display: flex;
+    flex-direction: row;
+    gap: 48px;
+    flex: 1;
+  }
+
+  .proof-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .proof-stat-num {
+    font-family: var(--font-mono);
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--foreground-inverse);
+    margin: 0;
+  }
+
+  .proof-stat-label {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--foreground-inverse);
+    opacity: 0.65;
+    line-height: 1.4;
+    margin: 0;
+    max-width: 200px;
+  }
+</style>
+
+<!-- Animation handled by global slide-animations.ts (dispatched via data-slide-anim="economics") -->

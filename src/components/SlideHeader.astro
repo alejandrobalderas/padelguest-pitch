@@ -1,0 +1,71 @@
+---
+/**
+ * SlideHeader.astro — The fixed-position label + title block at the top of every slide.
+ *
+ * Uses absolute positioning so the label and title sit at the *exact same coordinates*
+ * on every slide, eliminating any layout shift between slides.
+ *
+ * Layout (fixed):
+ *   - Label:  top 80px,  font 22px Inter 600 gold uppercase, letter-spacing 4
+ *   - Gap:    24px
+ *   - Title:  top 128px, font 64px Instrument Serif italic, line-height 1.1, max-width 1640
+ *
+ * The header zone reserves the y-range 80–296px regardless of slide.
+ * Body content starts at top: 320px (handled by .slide-body global class).
+ *
+ * Tone:
+ *   - "dark":  cream-background slides (default) — title in foreground-primary
+ *   - "light": forest-background slides — title in foreground-inverse
+ */
+
+interface Props {
+  label: string;
+  title?: string;
+  tone?: 'dark' | 'light';
+}
+
+const { label, title, tone = 'dark' } = Astro.props;
+---
+
+<div class={`slide-header tone-${tone}`}>
+  <p class="slide-label">{label}</p>
+  {title && <h1 class="slide-title" set:html={title} />}
+</div>
+
+<style>
+  .slide-header {
+    position: absolute;
+    top: 80px;
+    left: 140px;
+    right: 140px;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .slide-label {
+    font-family: var(--font-body);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: var(--accent-gold);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .slide-title {
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.1;
+    margin: 24px 0 0 0;
+    max-width: 1640px;
+  }
+
+  .tone-dark .slide-title {
+    color: var(--foreground-primary);
+  }
+  .tone-light .slide-title {
+    color: var(--foreground-inverse);
+  }
+</style>

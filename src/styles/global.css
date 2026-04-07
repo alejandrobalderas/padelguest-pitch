@@ -1,0 +1,144 @@
+/*
+ * PadelGuest Pitch Deck — Global Styles
+ *
+ * Imports:
+ *   1. Web fonts (Instrument Serif italic, Inter, Geist Mono, Geist Sans)
+ *   2. Tailwind v4 (with @theme directive for tokens)
+ *   3. Design tokens (CSS variables)
+ *   4. Reset + base styles for the slide-fitter primitive
+ */
+
+/* === Web fonts (self-hosted via @fontsource) === */
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
+
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+@import "@fontsource/geist-mono/400.css";
+@import "@fontsource/geist-mono/600.css";
+@import "@fontsource/geist-mono/700.css";
+
+@import "@fontsource/geist-sans/400.css";
+@import "@fontsource/geist-sans/600.css";
+
+/* === Tailwind v4 === */
+@import "tailwindcss";
+
+/* === Design tokens === */
+@import "./tokens.css";
+
+/* === Tailwind v4 theme: expose tokens as utility classes === */
+@theme {
+  --color-surface-primary: #F5F3EE;
+  --color-surface-secondary: #C8DBBC;
+  --color-surface-card: #FFFFFF;
+  --color-surface-inverse: #1B3A28;
+  --color-surface-dark-card: #2A4D35;
+
+  --color-foreground-primary: #1B3A28;
+  --color-foreground-secondary: #4A6B52;
+  --color-foreground-muted: #7A9A80;
+  --color-foreground-inverse: #FFFFFF;
+
+  --color-accent-gold: #C9A84C;
+  --color-accent-gold-light: #F5EDD4;
+  --color-accent-green: #2D5E3A;
+
+  --color-border-light: #E5E2DB;
+  --color-border-green: #3D5A3E;
+
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'SF Mono', monospace;
+  --font-sans: 'Geist Sans', 'Inter', system-ui, sans-serif;
+}
+
+/* === Reset + base === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden; /* No scrolling — slide fills viewport */
+  background: var(--surface-primary);
+  font-family: var(--font-body);
+  color: var(--foreground-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* The deck-page wrapper fills the viewport and houses one slide */
+.deck-page {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  display: block;
+}
+.deck-page.bg-cream { background: var(--surface-primary); }
+.deck-page.bg-forest { background: var(--surface-inverse); }
+
+/* The fixed-canvas slide frame — scaled and positioned by slide-fitter.ts */
+.slide-frame {
+  position: absolute;
+  width: var(--slide-width);
+  height: var(--slide-height);
+  transform-origin: top left;
+  transform:
+    translate(var(--slide-x), var(--slide-y))
+    scale(var(--slide-scale));
+}
+
+/*
+ * .slide-body — the standardized content area below the SlideHeader.
+ *
+ * Absolute positioning ensures every slide's body content starts at the EXACT
+ * same y-coordinate (top: 320px), eliminating layout shift between slides.
+ *
+ * Header zone (managed by SlideHeader): 80–296px
+ * Body zone:                            320–1020px (700px tall)
+ * Footer zone (free):                   1020–1080px
+ */
+.slide-body {
+  position: absolute;
+  top: 320px;
+  left: 140px;
+  right: 140px;
+  bottom: 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+ * FOUC prevention for GSAP animations.
+ *
+ * When JavaScript is enabled, the inline script in DeckLayout adds `.js`
+ * to <html> BEFORE the first paint. This selector then hides every element
+ * with [data-anim] from the very first frame, so the user never sees the
+ * "natural state" before GSAP gets a chance to animate them in.
+ *
+ * Without this rule, the page paints once with everything visible, then
+ * GSAP runs and snaps elements to opacity 0, then animates them back in.
+ * That snap-to-hidden is the "flash" the user sees.
+ *
+ * No-JS users do not have the `.js` class, so they see all content normally.
+ */
+html.js [data-anim] {
+  opacity: 0;
+}
+
+/*
+ * When a slide has already been viewed in this session, the slide root gets
+ * the `.slide-seen` class and we make all animated elements visible immediately
+ * (no GSAP timeline replays). Refresh clears the seen state via JS, restoring
+ * fresh animations.
+ */
+html.js .slide-seen [data-anim] {
+  opacity: 1;
+}
+
