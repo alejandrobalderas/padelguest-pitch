@@ -102,16 +102,24 @@ function animateCover(root: HTMLElement): void {
 }
 
 function animateHook(root: HTMLElement): void {
+  const lede = $(root, '[data-anim="lede"]');
   const stats = $(root, '[data-anim="stat"]');
+  const punch = $(root, '[data-anim="punch"]');
+
+  gsap.set(lede, { opacity: 0, y: 16 });
   gsap.set(stats, { opacity: 0, y: 40 });
+  gsap.set(punch, { opacity: 0, y: 16 });
+
   const tl = gsap.timeline({ delay: 0.2 });
-  tl.to(stats, {
-    opacity: 1,
-    y: 0,
-    stagger: 0.18,
-    duration: 0.9,
-    ease: 'power3.out',
-  });
+  tl.to(lede, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })
+    .to(stats, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.16,
+      duration: 0.85,
+      ease: 'power3.out',
+    }, '-=0.3')
+    .to(punch, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.2');
 }
 
 function animateProblem(root: HTMLElement): void {

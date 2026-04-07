@@ -12,49 +12,91 @@ import SlideHeader from '../components/SlideHeader.astro';
     />
 
     <div class="slide-body" data-slide-anim="hook">
+      <p class="lede" data-anim="lede">
+        A category at scale, hiding in plain sight.
+      </p>
+
       <div class="stats">
         <div class="stat" data-anim="stat">
+          <div class="rule"></div>
           <p class="num">30M+</p>
           <p class="cap">Padel players worldwide</p>
         </div>
         <div class="stat" data-anim="stat">
+          <div class="rule gold"></div>
           <p class="num gold">+25%</p>
           <p class="cap">Year over year. Every year.</p>
         </div>
         <div class="stat" data-anim="stat">
+          <div class="rule"></div>
           <p class="num">&lt;1%</p>
           <p class="cap">Of hotels worldwide have a court</p>
         </div>
       </div>
+
+      <p class="punch" data-anim="punch">
+        And hospitality hasn't built for it yet.
+      </p>
     </div>
   </Slide>
 </DeckLayout>
 
 <style>
   .slide-body {
-    justify-content: flex-end;
+    /* Three vertical zones: lede (top), stats (middle), punch (bottom).
+       space-between distributes the breathing room evenly. */
+    justify-content: space-between;
+    gap: 48px;
   }
 
+  /* Interpretive line that bridges the title to the stats. */
+  .lede {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--foreground-secondary);
+    max-width: 1100px;
+    margin: 0;
+  }
+
+  /* === Stats row === */
   .stats {
     display: flex;
     flex-direction: row;
     gap: 80px;
     align-items: flex-start;
     width: 100%;
+    flex: 1;
+    justify-content: flex-start;
   }
 
   .stat {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 20px;
     align-items: flex-start;
+    flex: 1;
+    max-width: 460px;
+  }
+
+  /* Short rule above each stat — visual rhythm + ties stats together */
+  .rule {
+    width: 56px;
+    height: 3px;
+    background: var(--foreground-primary);
+  }
+  .rule.gold {
+    background: var(--accent-gold);
   }
 
   .num {
     font-family: var(--font-mono);
-    font-size: 160px;
+    font-size: 180px;
     font-weight: 600;
-    line-height: 1;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
     color: var(--foreground-primary);
     margin: 0;
   }
@@ -67,6 +109,18 @@ import SlideHeader from '../components/SlideHeader.astro';
     color: var(--foreground-secondary);
     max-width: 380px;
     line-height: 1.4;
+    margin: 0;
+  }
+
+  /* Closing punchline — the rhetorical land. */
+  .punch {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--accent-green);
+    margin: 0;
   }
 </style>
 
