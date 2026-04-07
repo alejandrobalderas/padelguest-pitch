@@ -8,6 +8,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Opt all JS-based actions (checkout, setup-node, etc.) into Node 24 now,
+# silencing the deprecation warnings about the legacy Node 20 runtime.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
 # Allow this workflow to deploy to Pages
 permissions:
   contents: read

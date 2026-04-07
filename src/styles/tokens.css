@@ -1,11 +1,6 @@
 /*
- * PadelGuest Pitch Deck — Design Tokens
- *
- * Lifted from /PadelGuest/specs/knowledge/design-system.md
- * and the variables defined in padel-guest.pen.
- *
- * All slides reference these CSS variables. Tailwind theme is configured
- * in global.css to expose them as utility classes.
+ * Design tokens. All slides reference these CSS variables; the Tailwind
+ * theme in global.css exposes them as utility classes.
  */
 
 :root {
