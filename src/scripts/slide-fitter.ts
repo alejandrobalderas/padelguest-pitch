@@ -22,3 +22,6 @@ function fitSlide(): void {
 
 window.addEventListener('resize', fitSlide);
 window.addEventListener('orientationchange', fitSlide);
+// Re-fit after Astro view transitions (the <html> element persists, so the
+// previously-set CSS vars survive — this is belt-and-braces).
+document.addEventListener('astro:page-load', fitSlide);
