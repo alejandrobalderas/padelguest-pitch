@@ -26,6 +26,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Astro 6 requires Node >= 22.12. Even though bun runs the scripts,
+      # `astro build` shells out to node via the shebang in node_modules/.bin/astro.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Setup bun
         uses: oven-sh/setup-bun@v2
         with:
